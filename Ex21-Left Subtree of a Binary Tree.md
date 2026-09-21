@@ -38,72 +38,59 @@ import java.util.*;
 class Node {
     int data;
     Node left, right;
-
-    Node(int value) {
-        data = value;
-        left = right = null;
+    Node(int data) {
+        this.data = data;
+        this.left = this.right = null;
     }
 }
 
-public class LeftSubtreeCount {
-
-    public static Node buildTreeLevelOrder(int[] arr) {
+public class Main {
+    static Node buildTree(int[] arr) {
         if (arr.length == 0) return null;
-
         Node root = new Node(arr[0]);
-        Queue<Node> queue = new LinkedList<>();
-        queue.add(root);
-
+        Queue<Node> q = new LinkedList<>();
+        q.add(root);
         int i = 1;
-        while (!queue.isEmpty() && i < arr.length) {
-            Node current = queue.poll();
 
-            // Insert left child
+        while (!q.isEmpty() && i < arr.length) {
+            Node current = q.poll();
             if (i < arr.length) {
                 current.left = new Node(arr[i++]);
-                queue.add(current.left);
+                q.add(current.left);
             }
-
-            // Insert right child
             if (i < arr.length) {
                 current.right = new Node(arr[i++]);
-                queue.add(current.right);
+                q.add(current.right);
             }
         }
+
         return root;
     }
 
-    // Count nodes recursively
-    public static int countNodes(Node root) {
+    static int countNodes(Node root) {
         if (root == null) return 0;
         return 1 + countNodes(root.left) + countNodes(root.right);
     }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-
-        System.out.print("Enter number of nodes: ");
         int n = sc.nextInt();
-
         int[] arr = new int[n];
-        System.out.println("Enter level order elements:");
-        for (int i = 0; i < n; i++) {
-            arr[i] = sc.nextInt();
+        for (int i = 0; i < n; i++) arr[i] = sc.nextInt();
+        Node root = buildTree(arr);
+
+        if (root.left == null) {
+            System.out.println(0);
+        } else {
+            System.out.println(countNodes(root.left));
         }
-
-        Node root = buildTreeLevelOrder(arr);
-
-        int countLeft = countNodes(root.left);
-
-        System.out.println("Number of nodes in the left subtree: " + countLeft);
-        sc.close();
     }
 }
 ```
 
 ## Output:
 
-<img width="381" height="365" alt="image" src="https://github.com/user-attachments/assets/763990a7-1e36-489b-a003-4a9be74c0d4c" />
+<img width="321" height="115" alt="514838932-3d88487b-6602-4003-883c-9e1c2e5aafc6" src="https://github.com/user-attachments/assets/6ae05f8d-c5b4-4591-88c4-1ebb1b514666" />
 
 
 ## Result:
