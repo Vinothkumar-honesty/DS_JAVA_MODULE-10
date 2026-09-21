@@ -41,72 +41,49 @@ RegisterNumber:  212224040361
 
 import java.util.*;
 
-class Node {
-    int data;
-    Node left, right;
-
-    Node(int value) {
-        data = value;
-        left = right = null;
+public class BookIDSearch {
+    static class Node {
+        int data;
+        Node left, right;
+        Node(int data) {
+            this.data = data;
+        }
     }
-}
 
-public class Main {   // <- Make sure the file name is Main.java
-    
-    public static Node insert(Node root, int value) {
-        if (root == null) {
-            root = new Node(value);
-            return root;
-        }
-        if (value < root.data) {
-            root.left = insert(root.left, value);
-        } else if (value > root.data) {
-            root.right = insert(root.right, value);
-        }
+    public static Node insert(Node root, int key) {
+        if (root == null) return new Node(key);
+        if (key < root.data) root.left = insert(root.left, key);
+        else root.right = insert(root.right, key);
         return root;
     }
 
     public static boolean search(Node root, int key) {
         if (root == null) return false;
         if (root.data == key) return true;
-
-        if (key < root.data)
-            return search(root.left, key);
-        else
-            return search(root.right, key);
+        if (key < root.data) return search(root.left, key);
+        else return search(root.right, key);
     }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        Node root = null;
-
-        System.out.print("Enter number of Book IDs: ");
         int n = sc.nextInt();
-
-        System.out.println("Enter Book IDs:");
+        Node root = null;
         for (int i = 0; i < n; i++) {
-            int id = sc.nextInt();
-            root = insert(root, id);
+            root = insert(root, sc.nextInt());
         }
-
-        System.out.print("Enter Book ID to search: ");
-        int key = sc.nextInt();
-
-        if (search(root, key))
-            System.out.println("Book ID Found");
-        else
-            System.out.println("Book ID Not Found");
-
-        sc.close();
+        int q = sc.nextInt();
+        while (q-- > 0) {
+            int key = sc.nextInt();
+            System.out.println(search(root, key) ? "Found" : "Not Found");
+        }
     }
 }
-
 
 ```
 
 ## Output:
 
-<img width="377" height="246" alt="image" src="https://github.com/user-attachments/assets/c7aa913c-c232-4db1-a309-d8d7d25b588a" />
+<img width="426" height="185" alt="514839099-2f3cb628-3246-4a10-88bf-bbce3361bed2" src="https://github.com/user-attachments/assets/9ddd8b80-e8f2-47b1-bee3-9089e4caad13" />
 
 
 ## Result:
